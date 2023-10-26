@@ -13,7 +13,7 @@ bttnBuscar.addEventListener ('click', cargarPokemon);
 
 function cargarPokemon () {
 
-    window.fetch (`${apiURL}${inputName.value.toLowerCase()}`)
+    fetch (`${apiURL}${inputName.value.toLowerCase()}`)
 
     .then (datos => {
         if (datos.status === 404){
@@ -23,58 +23,51 @@ function cargarPokemon () {
         }
     })
 
-    .then (response => mostrarPokemon (response))
+    .then ((data) => mostrarPokemon (data))
+    .catch((error) => console.error('Error', error));
 
 }
 
-function mostrarPokemon (datos) {
+function mostrarPokemon(data){
+    nombrePokemon.textContent = data.name.toUpperCase();
+    idPokemon.textContent = (`# ${data.id}`);
+    imgPokemon.src = data.sprites.front_default;
 
-    nombrePokemon.textContent = datos.name.toUpperCase();
-    idPokemon.textContent = (`# ${datos.id}`)
-    imgPokemon.setAttribute ('src', datos.sprites.front_default);
+    renderPokemonTypes(data.types);
+    renderPokemonStats(data.stats);
+    renderPokemonAbilities(data.abilities);
+}
 
-    const {types} = datos;
-    pokemonDeTipo (types)
-
-        function pokemonDeTipo (types) {
-            typePokemon.innerHTML = '';
-            types.forEach(i => {
-                const typeTextElement = document.createElement("div");
-                typeTextElement.textContent = i.type.name;
-                typePokemon.appendChild(typeTextElement);
-            })
-        }
-
-    const {stats} = datos;
-    pokemonStats (stats)
-
-        function pokemonStats (stats) {
-            statsPokemon.innerHTML = '';
-            stats.forEach (i => {
-                const statElement = document.createElement("div");
-                const statElementName = document.createElement("div");
-                const statElementAmount = document.createElement("div");
-                statElementName.textContent = i.stat.name;
-                statElementAmount.textContent = i.base_stat;
-                statElement.append(statElementName);
-                statElement.append(statElementAmount);
-                statsPokemon.append(statElement);
-            }); 
-        }
-
-
-    const {abilities} = datos;
-    pokemonAbilidades (abilities)
-
-        function pokemonAbilidades (abilities) {
-            abilityPokemon.innerHTML = '';        
-            abilities.forEach(i => {
-                const typeTextElement = document.createElement("div");
-                typeTextElement.textContent = i.ability.name;
-                abilityPokemon.append(typeTextElement);
-            })
-        }
-
+function renderPokemonTypes(types) {
+    typePokemon.innerHTML = '';
+    types.forEach((type) => {
+      const typeTextElement = document.createElement('div');
+      typeTextElement.textContent = type.type.name;
+      typePokemon.appendChild(typeTextElement);
+    });
+}
+  
+function renderPokemonStats(stats) {
+    statsPokemon.innerHTML = '';
+    stats.forEach((stat) => {
+      const statElement = document.createElement('div');
+      const statElementName = document.createElement('div');
+      const statElementAmount = document.createElement('div');
+      statElementName.textContent = stat.stat.name;
+      statElementAmount.textContent = stat.base_stat;
+      statElement.appendChild(statElementName);
+      statElement.appendChild(statElementAmount);
+      statsPokemon.appendChild(statElement);
+    });
+}
+  
+function renderPokemonAbilities(abilities) {
+    abilityPokemon.innerHTML = '';
+    abilities.forEach((ability) => {
+      const abilityTextElement = document.createElement('div');
+      abilityTextElement.textContent = ability.ability.name;
+      abilityPokemon.appendChild(abilityTextElement);
+    });
 }
 
 // pokemon 2
@@ -102,58 +95,50 @@ function cargarPokemon2 () {
         }
     })
 
-    .then (response => mostrarPokemon2 (response))
+    .then ((data) => mostrarPokemon2 (data))
+    .catch((error) => console.error('Error', error));
 
 }
 
-function mostrarPokemon2 (datos) {
+function mostrarPokemon2(data){
+    nombrePokemon2.textContent = data.name.toUpperCase();
+    idPokemon2.textContent = (`# ${data.id}`);
+    imgPokemon2.src = data.sprites.front_default;
 
-    nombrePokemon2.textContent = datos.name.toUpperCase();
-    idPokemon2.textContent = (`# ${datos.id}`)
-    imgPokemon2.setAttribute ('src', datos.sprites.front_default);
+    renderPokemonTypes2(data.types);
+    renderPokemonStats2(data.stats);
+    renderPokemonAbilities2(data.abilities);
+}
 
-    const {types} = datos;
-    pokemonDeTipo (types)
+function renderPokemonTypes2(types) {
+    typePokemon2.innerHTML = '';
+    types.forEach((type) => {
+      const typeTextElement = document.createElement('div');
+      typeTextElement.textContent = type.type.name;
+      typePokemon2.appendChild(typeTextElement);
+    });
+}
 
-        function pokemonDeTipo (types) {
-            typePokemon2.innerHTML = '';
-            types.forEach(i => {
-                const typeTextElement = document.createElement("div");
-                typeTextElement.textContent = i.type.name;
-                typePokemon2.appendChild(typeTextElement);
-            })
-        }
+function renderPokemonStats2(stats) {
+    statsPokemon2.innerHTML = '';
+    stats.forEach((stat) => {
+      const statElement = document.createElement('div');
+      const statElementName = document.createElement('div');
+      const statElementAmount = document.createElement('div');
+      statElementName.textContent = stat.stat.name;
+      statElementAmount.textContent = stat.base_stat;
+      statElement.appendChild(statElementName);
+      statElement.appendChild(statElementAmount);
+      statsPokemon2.appendChild(statElement);
+    });
+}
 
-    const {stats} = datos;
-    pokemonStats (stats)
-
-        function pokemonStats (stats) {
-            statsPokemon2.innerHTML = '';
-            stats.forEach (i => {
-                const statElement = document.createElement("div");
-                const statElementName = document.createElement("div");
-                const statElementAmount = document.createElement("div");
-                statElementName.textContent = i.stat.name;
-                statElementAmount.textContent = i.base_stat;
-                statElement.append(statElementName);
-                statElement.append(statElementAmount);
-                statsPokemon2.append(statElement);
-            }); 
-        }
-
-
-    const {abilities} = datos;
-    pokemonAbilidades (abilities)
-
-        function pokemonAbilidades (abilities) {
-            abilityPokemon2.innerHTML = '';
-        
-            abilities.forEach(i => {
-                const typeTextElement = document.createElement("div");
-                typeTextElement.textContent = i.ability.name;
-                abilityPokemon2.append(typeTextElement);
-            })
-        }
-
+function renderPokemonAbilities2(abilities) {
+    abilityPokemon2.innerHTML = '';
+    abilities.forEach((ability) => {
+      const abilityTextElement = document.createElement('div');
+      abilityTextElement.textContent = ability.ability.name;
+      abilityPokemon2.appendChild(abilityTextElement);
+    });
 }
 
